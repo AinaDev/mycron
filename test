@@ -1,0 +1,31 @@
+## ISPsystem remove usageinfo task
+0 3 * * *	/usr/local/mgr5/sbin/cron-core sbin/mgrctl -m core remove_usageinfo >/dev/null 2>&1
+## ISPsystem acme.sh certs update task
+57 3 * * * /usr/local/mgr5/sbin/cron-core sbin/mgrctl -m core acmesh.certs.update >/dev/null 2>&1 
+## ISPsystem task mhich collect system statistics
+*/5  * * */usr/local/mgr5/sbin/cron-core sbin/mgrctl -m core sysinfostat >/dev/null 2>&1
+ ## ISPsystem delete expire logs task
+0	3 * * */usr/local/mgr5/sbin/cron-core sbin/mgrctl -m core deletearchivelogs >/dev/null 2>&1
+## ISPsystem usagestat task
+57 3 * * * /usr/local/mgr5/sbin/cron-core sbin/usagestat >/dev/null 2>&1 
+## ISPsystem problems autosolve task (/usr/local/mgr5)
+*/5 * * * * /usr/local/mgr5/sbin/cron-core sbin/mgrctl -m core problems.autosolve >/dev/null 2>&1 
+## ISPsystem update package cache task
+50 3 * * * /usr/local/mgr5/sbin/cron-ispmgr sbin/pkgupdate.sh >/dev/null 2>&1
+## ISPsystem geoip database update
+1 3 10 * * /usr/local/mgr5/sbin/cron-ispmgr sbin/ispmgr_geoiploader >/dev/null 2>&1 
+## ISPmanager stat handler (ispmgr)
+23 1 * * * /usr/local/mgr5/sbin/cron-ispmgr sbin/mgrctl -m ispmgr ispstat >/dev/null 2>&1 
+## ISPmanager periodic tasks handler (ispmgr)
+* * * * *	/usr/local/mgr5/sbin/cron-ispmgr sbin/mgrctl -m ispmgr periodic >/dev/null 2>&1
+## ISPsystem problems autosolve task (/usr/local/mgr5)
+*/5 * * * * /usr/local/mgr5/sbin/cron-ispmgr sbin/mgrctl -m ispmgr problems.autosolve >/dev/null 2>&1 
+## Check DS records from the domain registrar
+48 4 * * 0 /usr/local/mgr5/sbin/cron-ispmgr sbin/mgrctl -m ispmgr checkdsrecords >/dev/null 2>&1 
+## ISPsystem upgrade task
+14 16 * * * /usr/local/mgr5/sbin/cron-ispmgr sbin/pkgupgrade.sh coremanager >/dev/null 2>&1 
+## ISPmanager letsencrypt cert update check
+31 3 * * * /usr/local/mgr5/sbin/cron-ispmgr sbin/mgrctl -m ispmgr letsencrypt .check.update >/dev/null 2>&1 
+## ISPsystem services monitoring task (srvmon)
+*/15 * * * * /usr/local/mgr5/sbin/cron-ispmgr addon/srvmon >/dev/null 2>&1
+
